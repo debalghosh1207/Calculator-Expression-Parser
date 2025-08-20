@@ -44,23 +44,38 @@ install(
 )
 
 # Install headers
-# install(
-# 	DIRECTORY include/ 
-# 	DESTINATION include
-# 	FILES_MATCHING PATTERN "*.hpp"
-# 	PATTERN "*.h"
-# )
-
-# Alternative: Install specific headers explicitly (uncomment if you prefer explicit control)
 install(
-	FILES include/expression_parser.hpp
-	DESTINATION /usr/include
+	DIRECTORY include/ 
+	DESTINATION include
+	FILES_MATCHING PATTERN "*.hpp"
+	PATTERN "*.h"
 )
 
 # Install export targets for find_package support
 install(
 	EXPORT expression_parser-targets
 	FILE expression_parser-targets.cmake
+	DESTINATION lib/cmake/expression_parser
+)
+
+# Configure and install the config file
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+	cmake/expression_parser-config.cmake.in
+	"${CMAKE_CURRENT_BINARY_DIR}/expression_parser-config.cmake"
+	INSTALL_DESTINATION lib/cmake/expression_parser
+)
+
+write_basic_package_version_file(
+	"${CMAKE_CURRENT_BINARY_DIR}/expression_parser-config-version.cmake"
+	VERSION ${PROJECT_VERSION}
+	COMPATIBILITY SameMajorVersion
+)
+
+install(
+	FILES
+		"${CMAKE_CURRENT_BINARY_DIR}/expression_parser-config.cmake"
+		"${CMAKE_CURRENT_BINARY_DIR}/expression_parser-config-version.cmake"
 	DESTINATION lib/cmake/expression_parser
 )
 
