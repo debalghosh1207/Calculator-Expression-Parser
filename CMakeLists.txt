@@ -43,6 +43,18 @@ install(
 	INCLUDES DESTINATION include
 )
 
+# Ensure the development symlink is created (libexpression_parser.so)
+# This is needed for linking during development
+if(UNIX)
+	install(CODE "
+		execute_process(
+			COMMAND ${CMAKE_COMMAND} -E create_symlink
+			libexpression_parser.so.${PROJECT_VERSION_MAJOR}
+			\${CMAKE_INSTALL_PREFIX}/lib/libexpression_parser.so
+		)
+	")
+endif()
+
 # Install headers
 install(
 	DIRECTORY include/ 
