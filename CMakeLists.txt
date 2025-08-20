@@ -54,7 +54,7 @@ install(
 # Alternative: Install specific headers explicitly (uncomment if you prefer explicit control)
 install(
 	FILES include/expression_parser.hpp
-	DESTINATION include
+	DESTINATION /usr/include
 )
 
 # Install export targets for find_package support
