@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(expression_parser)
+project(expression_parser VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -10,6 +10,12 @@ add_library(
 	./src/expression_parser.cpp
 	./src/tokenizer.cpp
 	./src/parser.cpp
+)
+
+# Set library version and soversion
+set_target_properties(expression_parser PROPERTIES
+	VERSION ${PROJECT_VERSION}
+	SOVERSION ${PROJECT_VERSION_MAJOR}
 )
 
 set(
@@ -27,14 +33,27 @@ target_include_directories(
 
 # Internal headers (in src) are automatically visible to these sources; no need to install them.
 
+# Install the library
 install(
 	TARGETS expression_parser
+	EXPORT expression_parser-targets
 	LIBRARY DESTINATION lib
 	ARCHIVE DESTINATION lib
 	RUNTIME DESTINATION bin
+	INCLUDES DESTINATION include
 )
 
+# Install headers
 install(
-	DIRECTORY include/ DESTINATION include
+	DIRECTORY include/ 
+	DESTINATION include
+	FILES_MATCHING PATTERN "*.hpp"
+)
+
+# Install export targets for find_package support
+install(
+	EXPORT expression_parser-targets
+	FILE expression_parser-targets.cmake
+	DESTINATION lib/cmake/expression_parser
 )
 
