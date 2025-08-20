@@ -44,10 +44,17 @@ install(
 )
 
 # Install headers
+# install(
+# 	DIRECTORY include/ 
+# 	DESTINATION include
+# 	FILES_MATCHING PATTERN "*.hpp"
+# 	PATTERN "*.h"
+# )
+
+# Alternative: Install specific headers explicitly (uncomment if you prefer explicit control)
 install(
-	DIRECTORY include/ 
+	FILES include/expression_parser.hpp
 	DESTINATION include
-	FILES_MATCHING PATTERN "*.hpp"
 )
 
 # Install export targets for find_package support
